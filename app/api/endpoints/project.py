@@ -1,9 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from pdb import set_trace
-
-
 from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud import project_crud, donation_crud
