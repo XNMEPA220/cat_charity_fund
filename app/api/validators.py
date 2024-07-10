@@ -41,7 +41,8 @@ async def check_update_amount_lower_invested(
     ):
         raise HTTPException(
             status_code=HTTPStatus.BAD_REQUEST,
-            detail='Нельзя изменить сумму проекта, если она меньше уже внесенной суммы!'
+            detail=('Нельзя изменить сумму проекта,'
+                    'если она меньше уже внесенной суммы!')
         )
 
 
@@ -59,7 +60,10 @@ async def check_name_duplicate(
         project_name: str,
         session: AsyncSession
 ) -> None:
-    project_id = await project_crud.get_project_id_by_name(project_name, session)
+    project_id = await project_crud.get_project_id_by_name(
+        project_name,
+        session
+    )
     if project_id is not None:
         raise HTTPException(
             status_code=HTTPStatus.BAD_REQUEST,
