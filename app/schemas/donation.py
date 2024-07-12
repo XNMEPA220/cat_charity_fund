@@ -5,6 +5,7 @@ from pydantic import BaseModel, PositiveInt, Extra
 
 
 class DonationCreate(BaseModel):
+    """Схема для создания пожертвования."""
     full_amount: PositiveInt
     comment: Optional[str]
 
@@ -13,6 +14,7 @@ class DonationCreate(BaseModel):
 
 
 class DonationDB(DonationCreate):
+    """Схема для работы пожертвований с базой данных."""
     id: int
     create_date: datetime
     user_id: int

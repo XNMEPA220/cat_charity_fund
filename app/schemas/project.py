@@ -5,12 +5,14 @@ from pydantic import BaseModel, PositiveInt, Field, Extra, validator
 
 
 class ProjectCreate(BaseModel):
+    """Схема для создания проекта."""
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1)
     full_amount: PositiveInt
 
 
 class ProjectDB(ProjectCreate):
+    """Схема для работы проектов с базой данных."""
     id: int
     invested_amount: int
     fully_invested: bool
@@ -22,6 +24,7 @@ class ProjectDB(ProjectCreate):
 
 
 class ProjectUpdate(BaseModel):
+    """Схема для обновления проекта."""
     name: Optional[str] = Field(None, min_length=1, max_length=100)
     description: Optional[str]
     full_amount: Optional[PositiveInt]

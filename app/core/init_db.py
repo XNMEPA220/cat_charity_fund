@@ -32,6 +32,7 @@ async def create_user(
 
 
 async def create_first_superuser():
+    """Функция для создания суперпользователя при первом запуске приложения."""
     if (settings.first_superuser_email is not None and
             settings.first_superuser_password is not None):
         await create_user(

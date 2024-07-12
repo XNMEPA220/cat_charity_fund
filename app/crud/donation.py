@@ -7,12 +7,14 @@ from app.models.user import User
 
 
 class CRUDDonation(CRUDBase):
+    """Класс для CRUD операций с пожертвованиями."""
 
     async def get_by_user(
             self,
             session: AsyncSession,
             user: User
     ):
+        """Функция получения всех пожертвований пользователя."""
         reservation = await session.execute(
             select(Donation).where(
                 Donation.user_id == user.id

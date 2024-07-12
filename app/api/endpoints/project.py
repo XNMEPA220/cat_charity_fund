@@ -27,6 +27,7 @@ async def create_project(
         project: ProjectCreate,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Только для суперпользователя. Создание нового проекта."""
     await check_name_duplicate(project.name, session)
     new_project = await project_crud.create(project, session)
     invest_process = investment_process(
@@ -45,6 +46,7 @@ async def create_project(
 async def get_all_projects(
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Получение списка всех проектов."""
     return await project_crud.get_multi(session)
 
 
@@ -58,6 +60,7 @@ async def update_project(
         obj_in: ProjectUpdate,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Только для суперпользователя. Изменение проекта."""
     project = await check_project_exists(project_id, session)
     await check_project_is_closed(project)
     await check_update_amount_lower_invested(obj_in, project)
@@ -74,6 +77,7 @@ async def delete_project(
         project_id: int,
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Только для суперпользователя. Удаление проекта."""
     project = await check_project_exists(project_id, session)
     await check_invested_before_delete_project(project)
     return await project_crud.delete(project, session)

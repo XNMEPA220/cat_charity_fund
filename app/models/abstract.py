@@ -6,6 +6,7 @@ from app.core.db import Base
 
 
 class AbstractModel(Base):
+    """Базовый класс для моделей."""
     __abstract__ = True
 
     full_amount = Column(Integer)

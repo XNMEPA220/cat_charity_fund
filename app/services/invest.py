@@ -7,6 +7,7 @@ from app.models import CharityProject, Donation
 def completion_of_investment(
         obj: Union[CharityProject, Donation],
 ) -> Union[CharityProject, Donation]:
+    """Функция для закрытия проекта, после его полного инвестирования."""
     obj.invested_amount = obj.full_amount
     obj.fully_invested = True
     obj.close_date = datetime.now()
@@ -17,6 +18,7 @@ def investment_process(
         sources: Union[List[CharityProject], List[Donation]],
         target: Union[CharityProject, Donation]
 ) -> Union[List[CharityProject], List[Donation]]:
+    """Функция для проведения процесса инвестирования."""
     modified_sources = []
     for source in sources:
         exists_amount = source.full_amount - source.invested_amount

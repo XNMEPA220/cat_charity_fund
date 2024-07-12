@@ -8,6 +8,7 @@ from app.models.user import User
 
 
 class CRUDBase:
+    """Базовый класс для CRUD операций."""
 
     def __init__(self, model):
         self.model = model
@@ -17,6 +18,7 @@ class CRUDBase:
             session: AsyncSession,
             obj
     ):
+        """Функция сохранения объекта в базу данных."""
         session.add(obj)
         await session.commit()
         await session.refresh(obj)
@@ -27,6 +29,7 @@ class CRUDBase:
             obj_id: int,
             session: AsyncSession
     ):
+        """Функция получения объекта по id."""
         db_obj = await session.execute(
             select(self.model).where(
                 self.model.id == obj_id
@@ -38,6 +41,7 @@ class CRUDBase:
             self,
             session: AsyncSession
     ):
+        """Функция получения всех объектов."""
         db_objs = await session.execute(select(self.model))
         return db_objs.scalars().all()
 
@@ -47,6 +51,7 @@ class CRUDBase:
             session: AsyncSession,
             user: Optional[User] = None
     ):
+        """Функция создания объекта."""
         obj_in_data = obj_in.dict()
         if user is not None:
             obj_in_data['user_id'] = user.id
@@ -59,6 +64,7 @@ class CRUDBase:
             obj_in,
             session: AsyncSession
     ):
+        """Функция обновления объекта."""
         obj_data = jsonable_encoder(db_obj)
         update_data = obj_in.dict(exclude_unset=True)
 
@@ -72,6 +78,7 @@ class CRUDBase:
             db_obj,
             session: AsyncSession
     ):
+        """Функция удаления объекта."""
         await session.delete(db_obj)
         await session.commit()
         return db_obj
@@ -80,6 +87,7 @@ class CRUDBase:
             self,
             session: AsyncSession
     ):
+        """Функция получения всех активных объектов."""
         all_active = await session.execute(
             select(self.model).where(
                 self.model.fully_invested == false()

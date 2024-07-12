@@ -31,6 +31,7 @@ async def create_donation(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)
 ):
+    """Создание пожертвования."""
     new_donation = await donation_crud.create(donation, session, user)
     invest_process = investment_process(
         await project_crud.get_all_active(session),
@@ -49,6 +50,7 @@ async def create_donation(
 async def get_all_donations(
         session: AsyncSession = Depends(get_async_session)
 ):
+    """Только для суперпользователя. Получение списка всех пожертвований."""
     return await donation_crud.get_multi(session)
 
 
@@ -67,4 +69,5 @@ async def get_my_donations(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user)
 ):
+    """Получение списка всех пожертвований пользователя."""
     return await donation_crud.get_by_user(session, user)

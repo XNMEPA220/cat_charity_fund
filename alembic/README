@@ -1,1 +1,15 @@
-Generic single-database configuration with an async dbapi.
+# Миграции Alembic
+
+Основные команды для управления миграциями:
+
+# Инициализация файлов и конфигураций Alembic
+alembic init alembic
+
+# Создание новой миграции (после -m нужно указать название миграции)
+alembic revision --autogenerate -m "Initial revision"
+
+# Выполнение миграции до последней версии
+alembic upgrade head
+
+# Отмена последней миграции
+alembic downgrade -1
