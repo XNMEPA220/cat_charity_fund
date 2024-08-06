@@ -9,6 +9,7 @@ from app.models.charity_project import CharityProject
 
 class CRUDProject(CRUDBase):
     """Класс для CRUD операций с проектами."""
+
     async def get_project_id_by_name(
             self,
             project_name: str,
@@ -32,8 +33,8 @@ class CRUDProject(CRUDBase):
             select([
                 self.model.name,
                 (
-                        func.EXTRACT('epoch', self.model.close_date) -
-                        func.EXTRACT('epoch', self.model.create_date)
+                    func.EXTRACT('epoch', self.model.close_date) -
+                    func.EXTRACT('epoch', self.model.create_date)
                 ).label('collection_time'),
                 self.model.description
             ]).where(self.model.fully_invested).order_by('collection_time')
